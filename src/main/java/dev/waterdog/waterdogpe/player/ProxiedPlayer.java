@@ -25,6 +25,7 @@ import dev.waterdog.waterdogpe.network.protocol.user.LoginData;
 import dev.waterdog.waterdogpe.network.protocol.user.Platform;
 import dev.waterdog.waterdogpe.network.protocol.handler.downstream.InitialHandler;
 import dev.waterdog.waterdogpe.network.protocol.handler.downstream.SwitchDownstreamHandler;
+import io.netty.channel.ConnectTimeoutException;
 import org.cloudburstmc.protocol.bedrock.data.ScoreInfo;
 import org.cloudburstmc.protocol.bedrock.data.command.CommandOriginData;
 import org.cloudburstmc.protocol.bedrock.data.command.CommandOriginType;
@@ -293,13 +294,18 @@ public class ProxiedPlayer implements CommandSender {
         if (this.disconnected.get()) {
             return;
         }
-
-        this.getLogger().error("[{}|{}] Unable to connect to downstream {}", this.getAddress(), this.getName(), targetServer.getServerName(), error);
         String exceptionMessage = Objects.requireNonNullElse(error.getLocalizedMessage(), error.getClass().getSimpleName());
+        if (error instanceof ConnectTimeoutException) {
+            this.getLogger().error("[{}|{}] Unable to connect to downstream: 服务器离线", this.getAddress(), this.getName(), targetServer.getServerName());
+        } else {
+            this.getLogger().error("[{}|{}] Unable to connect to downstream {}", this.getAddress(), this.getName(), targetServer.getServerName(), error);
+        }
+
         if (this.sendToFallback(targetServer, ReconnectReason.EXCEPTION, exceptionMessage)) {
             this.sendMessage(new TranslationContainer("waterdog.connected.fallback", targetServer.getServerName()));
         } else {
-            this.disconnect(new TranslationContainer("waterdog.downstream.transfer.failed", targetServer.getServerName(), exceptionMessage));
+            // waterdog.downstream.transfer.failed
+            this.disconnect(new TranslationContainer("§c服务器离线，请关注群内获取开服通知！", targetServer.getServerName(), exceptionMessage));
         }
     }
 

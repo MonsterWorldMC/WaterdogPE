@@ -138,6 +138,8 @@ public class ProxyServer {
         this.configurationManager.loadLanguage();
         this.errorReporting = new ErrorReporting(this);
 
+        System.setProperty("bedrock.maxDecompressedBytes", String.valueOf(this.getNetworkSettings().maxDecompressedBytes()));//10M * 100
+
         if (!this.getNetworkSettings().enableIpv6()) {
             // Some devices and networks may not support IPv6
             System.setProperty("java.net.preferIPv4Stack", "true");
@@ -271,6 +273,8 @@ public class ProxyServer {
                     .option(RakChannelOption.RAK_HANDLE_PING, true)
                     .option(RakChannelOption.RAK_MAX_MTU, this.getNetworkSettings().getMaximumMtu())
                     .option(RakChannelOption.RAK_SEND_COOKIE, this.getNetworkSettings().enableCookies())
+                    .option(RakChannelOption.RAK_PACKET_LIMIT, this.getNetworkSettings().packetLimit())
+                    .childOption(RakChannelOption.RAK_PACKET_LIMIT, this.getNetworkSettings().packetLimit())
                     .childOption(RakChannelOption.RAK_SESSION_TIMEOUT, 10000L)
                     .childOption(RakChannelOption.RAK_ORDERING_CHANNELS, 1)
                     .handler(new OfflineServerChannelInitializer(this))

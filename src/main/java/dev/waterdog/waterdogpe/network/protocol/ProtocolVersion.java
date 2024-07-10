@@ -15,6 +15,7 @@
 
 package dev.waterdog.waterdogpe.network.protocol;
 
+import dev.waterdog.waterdogpe.custom.*;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.ToString;
@@ -49,17 +50,6 @@ import org.cloudburstmc.protocol.bedrock.codec.v557.Bedrock_v557;
 import org.cloudburstmc.protocol.bedrock.codec.v560.Bedrock_v560;
 import org.cloudburstmc.protocol.bedrock.codec.v567.Bedrock_v567;
 import org.cloudburstmc.protocol.bedrock.codec.v568.Bedrock_v568;
-import org.cloudburstmc.protocol.bedrock.codec.v575.Bedrock_v575;
-import org.cloudburstmc.protocol.bedrock.codec.v582.Bedrock_v582;
-import org.cloudburstmc.protocol.bedrock.codec.v589.Bedrock_v589;
-import org.cloudburstmc.protocol.bedrock.codec.v594.Bedrock_v594;
-import org.cloudburstmc.protocol.bedrock.codec.v618.Bedrock_v618;
-import org.cloudburstmc.protocol.bedrock.codec.v622.Bedrock_v622;
-import org.cloudburstmc.protocol.bedrock.codec.v630.Bedrock_v630;
-import org.cloudburstmc.protocol.bedrock.codec.v649.Bedrock_v649;
-import org.cloudburstmc.protocol.bedrock.codec.v662.Bedrock_v662;
-import org.cloudburstmc.protocol.bedrock.codec.v671.Bedrock_v671;
-import org.cloudburstmc.protocol.bedrock.codec.v685.Bedrock_v685;
 
 @ToString(exclude = {"defaultCodec", "bedrockCodec"})
 public enum ProtocolVersion {
@@ -95,17 +85,18 @@ public enum ProtocolVersion {
     MINECRAFT_PE_1_19_60(567, Bedrock_v567.CODEC),
     MINECRAFT_PE_1_19_62(567, 568, Bedrock_v568.CODEC), // this version has not bumped protocol number on client side
     MINECRAFT_PE_1_19_63(568, Bedrock_v568.CODEC),
-    MINECRAFT_PE_1_19_70(575, Bedrock_v575.CODEC),
-    MINECRAFT_PE_1_19_80(582, Bedrock_v582.CODEC),
-    MINECRAFT_PE_1_20_0(589, Bedrock_v589.CODEC),
-    MINECRAFT_PE_1_20_10(594, Bedrock_v594.CODEC),
-    MINECRAFT_PE_1_20_30(618, Bedrock_v618.CODEC),
-    MINECRAFT_PE_1_20_40(622, Bedrock_v622.CODEC),
-    MINECRAFT_PE_1_20_50(630, Bedrock_v630.CODEC),
-    MINECRAFT_PE_1_20_60(649, Bedrock_v649.CODEC),
-    MINECRAFT_PE_1_20_70(662, Bedrock_v662.CODEC),
-    MINECRAFT_PE_1_20_80(671, Bedrock_v671.CODEC),
-    MINECRAFT_PE_1_21_0(685, Bedrock_v685.CODEC);
+    MINECRAFT_PE_1_19_70(575, CustomNetworkSettings575.CODEC),
+    MINECRAFT_PE_1_19_80(582, CustomNetworkSettings582.CODEC),
+    MINECRAFT_PE_1_20_0(589, CustomNetworkSettings589.CODEC),
+    MINECRAFT_PE_1_20_10(594, CustomNetworkSettings594.CODEC),
+    MINECRAFT_PE_1_20_30(618, CustomNetworkSettings618.CODEC),
+    MINECRAFT_PE_1_20_40(622, CustomNetworkSettings622.CODEC),
+    MINECRAFT_PE_1_20_50(630, CustomNetworkSettings630.CODEC),
+    MINECRAFT_PE_1_20_60(649, CustomNetworkSettings649.CODEC),
+    MINECRAFT_PE_1_20_70(662, CustomNetworkSettings662.CODEC),
+    MINECRAFT_PE_1_20_80(671, CustomNetworkSettings671.CODEC),
+    MINECRAFT_PE_1_21_0(685, CustomNetworkSettings685.CODEC),
+    MINECRAFT_PE_1_21_2(686, CustomNetworkSettings685.CODEC);
 
     private static final ProtocolVersion[] VALUES = values();
     private static final Int2ObjectMap<ProtocolVersion> VERSIONS = new Int2ObjectOpenHashMap<>();
